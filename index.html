@@ -3,12 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Siqi Sun | Postdoctoral Researcher</title>
+<title>Siqi Sun | Postdoctoral Associate, WashU Medicine</title>
 <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-
 body {
   font-family: 'Source Sans 3', sans-serif;
   font-weight: 400;
@@ -25,7 +24,7 @@ header {
   padding: 3.5rem 0 3rem;
 }
 .header-inner {
-  max-width: 900px;
+  max-width: 920px;
   margin: 0 auto;
   padding: 0 2rem;
   display: grid;
@@ -46,6 +45,11 @@ header {
   text-transform: uppercase;
   gap: 0.5rem;
   flex-shrink: 0;
+  overflow: hidden;
+}
+.photo-box img {
+  width: 100%; height: 100%;
+  object-fit: cover;
 }
 .header-info h1 {
   font-family: 'Merriweather', serif;
@@ -57,11 +61,16 @@ header {
 .header-info .position {
   font-size: 0.95rem;
   color: rgba(255,255,255,0.75);
-  margin-bottom: 0.15rem;
+  margin-bottom: 0.1rem;
 }
 .header-info .institution {
   font-size: 0.95rem;
   color: rgba(255,255,255,0.55);
+  margin-bottom: 0.1rem;
+}
+.header-info .address {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.45);
   margin-bottom: 1.4rem;
 }
 .header-links {
@@ -76,10 +85,7 @@ header {
   border-radius: 2px;
   transition: all 0.18s;
 }
-.header-links a:hover {
-  color: #fff;
-  border-color: rgba(255,255,255,0.5);
-}
+.header-links a:hover { color: #fff; border-color: rgba(255,255,255,0.5); }
 
 /* ── NAV ── */
 nav {
@@ -88,29 +94,26 @@ nav {
   position: sticky; top: 0; z-index: 100;
 }
 .nav-inner {
-  max-width: 900px; margin: 0 auto;
+  max-width: 920px; margin: 0 auto;
   padding: 0 2rem;
-  display: flex; gap: 0;
+  display: flex; gap: 0; overflow-x: auto;
 }
 nav a {
   display: block;
-  padding: 0.85rem 1.3rem;
+  padding: 0.85rem 1.1rem;
   font-size: 0.83rem;
   font-weight: 500;
   color: #555;
   text-decoration: none;
   letter-spacing: 0.04em;
+  white-space: nowrap;
   border-bottom: 2px solid transparent;
   transition: color 0.15s, border-color 0.15s;
 }
 nav a:hover { color: #1a2744; border-bottom-color: #1a2744; }
 
 /* ── MAIN ── */
-main {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 0 2rem;
-}
+main { max-width: 920px; margin: 0 auto; padding: 0 2rem; }
 
 section {
   padding: 3rem 0;
@@ -130,124 +133,92 @@ h2 {
 }
 
 /* ── BIO ── */
-.bio-text {
-  font-size: 0.95rem;
-  color: #333;
-  line-height: 1.85;
-  max-width: 720px;
-}
+.bio-text { font-size: 0.95rem; color: #333; line-height: 1.85; max-width: 740px; }
 .bio-text p + p { margin-top: 1rem; }
 
-/* ── RESEARCH INTERESTS ── */
-.interests-list {
-  display: flex; flex-wrap: wrap; gap: 0.6rem;
-  margin-top: 0.5rem;
-}
+/* ── INTERESTS ── */
+.interests-list { display: flex; flex-wrap: wrap; gap: 0.6rem; }
 .interest-tag {
-  background: #eef2f8;
-  color: #1a2744;
-  padding: 0.35rem 1rem;
-  border-radius: 2px;
-  font-size: 0.85rem;
+  background: #eef2f8; color: #1a2744;
+  padding: 0.35rem 1rem; border-radius: 2px; font-size: 0.85rem;
 }
 
 /* ── PUBLICATIONS ── */
-.pub-list { display: flex; flex-direction: column; gap: 1.5rem; }
-.pub-item {
-  display: grid;
-  grid-template-columns: 52px 1fr;
-  gap: 1rem;
-}
-.pub-year {
-  font-size: 0.8rem;
-  color: #888;
-  font-weight: 500;
-  padding-top: 0.1rem;
-  text-align: right;
+.pub-list { display: flex; flex-direction: column; gap: 1.4rem; }
+.pub-item { display: grid; grid-template-columns: 28px 1fr; gap: 1rem; }
+.pub-num {
+  font-size: 0.8rem; color: #aaa; font-weight: 500;
+  padding-top: 0.15rem; text-align: right;
 }
 .pub-title {
   font-family: 'Merriweather', serif;
-  font-size: 0.95rem;
-  font-weight: 400;
-  color: #111;
-  line-height: 1.5;
-  margin-bottom: 0.3rem;
+  font-size: 0.92rem; font-weight: 400;
+  color: #111; line-height: 1.5; margin-bottom: 0.25rem;
 }
-.pub-authors {
-  font-size: 0.85rem;
-  color: #555;
-  margin-bottom: 0.2rem;
-}
+.pub-authors { font-size: 0.84rem; color: #555; margin-bottom: 0.2rem; }
 .pub-authors strong { color: #1a2744; }
-.pub-venue {
-  font-size: 0.85rem;
-  font-style: italic;
-  color: #888;
-  margin-bottom: 0.4rem;
-}
+.pub-venue { font-size: 0.84rem; font-style: italic; color: #888; margin-bottom: 0.35rem; }
 .pub-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
 .pub-tag {
-  font-size: 0.7rem;
-  padding: 0.1rem 0.55rem;
-  border-radius: 2px;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  font-size: 0.68rem; padding: 0.1rem 0.55rem; border-radius: 2px;
+  font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase;
 }
-.pt-conf { background: #dce8f7; color: #1a4d8a; }
-.pt-jour { background: #fdf0d5; color: #7a4f00; }
-.pt-if   { background: #e8f5e9; color: #2e7d32; }
+.pt-conf  { background: #dce8f7; color: #1a4d8a; }
+.pt-jour  { background: #fdf0d5; color: #7a4f00; }
+.pt-if    { background: #e8f5e9; color: #2e7d32; }
+.pt-talk  { background: #f3e8fd; color: #5b2d8e; }
+.pt-sub   { background: #f0f0f0; color: #666; }
 
-/* ── EXPERIENCE / EDUCATION ── */
-.cv-list { display: flex; flex-direction: column; gap: 1.6rem; }
-.cv-item { display: grid; grid-template-columns: 180px 1fr; gap: 1.5rem; }
-.cv-dates {
-  font-size: 0.82rem;
-  color: #888;
-  padding-top: 0.1rem;
-  text-align: right;
-  line-height: 1.5;
-}
-.cv-title {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: #111;
-  margin-bottom: 0.1rem;
-}
-.cv-org {
-  font-size: 0.88rem;
-  color: #555;
-  margin-bottom: 0.3rem;
-}
-.cv-desc {
-  font-size: 0.85rem;
-  color: #777;
-  line-height: 1.65;
-}
+/* ── CV ITEMS ── */
+.cv-list { display: flex; flex-direction: column; gap: 1.8rem; }
+.cv-item { display: grid; grid-template-columns: 190px 1fr; gap: 1.5rem; }
+.cv-dates { font-size: 0.82rem; color: #888; padding-top: 0.1rem; text-align: right; line-height: 1.5; }
+.cv-title { font-size: 0.95rem; font-weight: 600; color: #111; margin-bottom: 0.1rem; }
+.cv-org   { font-size: 0.88rem; color: #555; margin-bottom: 0.35rem; }
+.cv-desc  { font-size: 0.85rem; color: #666; line-height: 1.7; }
+.cv-desc ul { padding-left: 1.2rem; }
+.cv-desc li { margin-bottom: 0.2rem; }
+
 .award-badge {
-  display: inline-block;
-  font-size: 0.7rem;
-  background: #fff7e0;
-  color: #7a4f00;
+  display: inline-block; font-size: 0.7rem;
+  background: #fff7e0; color: #7a4f00;
   border: 1px solid #f0d580;
-  padding: 0.15rem 0.55rem;
-  border-radius: 2px;
-  margin-top: 0.3rem;
+  padding: 0.15rem 0.55rem; border-radius: 2px; margin-top: 0.3rem;
 }
+
+/* ── SERVICE ── */
+.service-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.service-block h3 {
+  font-size: 0.82rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: #888; margin-bottom: 0.8rem;
+}
+.service-block ul { list-style: none; }
+.service-block li {
+  font-size: 0.88rem; color: #444;
+  padding: 0.3rem 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+.service-block li:last-child { border-bottom: none; }
+
+/* ── AWARDS ── */
+.awards-list { display: flex; flex-direction: column; gap: 0; }
+.award-item {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 0.88rem;
+}
+.award-item:last-child { border-bottom: none; }
+.award-name { color: #333; }
+.award-year { color: #aaa; font-size: 0.8rem; }
 
 /* ── CONTACT ── */
-.contact-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem 3rem;
-}
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem 3rem; }
 .contact-item { display: flex; flex-direction: column; gap: 0.2rem; }
 .contact-label {
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #888;
+  font-size: 0.75rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase; color: #888;
 }
 .contact-value { font-size: 0.9rem; color: #1a2744; }
 .contact-value a { color: #1a4d8a; text-decoration: none; }
@@ -255,12 +226,9 @@ h2 {
 
 /* ── FOOTER ── */
 footer {
-  background: #f7f8fa;
-  border-top: 1px solid #e2e5eb;
-  padding: 1.5rem 2rem;
-  text-align: center;
-  font-size: 0.8rem;
-  color: #999;
+  background: #f7f8fa; border-top: 1px solid #e2e5eb;
+  padding: 1.5rem 2rem; text-align: center;
+  font-size: 0.8rem; color: #999;
 }
 
 @media (max-width: 680px) {
@@ -268,13 +236,14 @@ footer {
   .cv-item { grid-template-columns: 1fr; gap: 0.3rem; }
   .cv-dates { text-align: left; }
   .pub-item { grid-template-columns: 1fr; }
-  .pub-year { text-align: left; }
+  .service-grid { grid-template-columns: 1fr; }
   .contact-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 <body>
 
+<!-- HEADER -->
 <header>
   <div class="header-inner">
     <div class="photo-box">
@@ -284,17 +253,19 @@ footer {
     <div class="header-info">
       <h1>Siqi Sun</h1>
       <div class="position">Postdoctoral Associate</div>
-      <div class="institution">School of Computer Science · Fudan University · Shanghai, China</div>
+      <div class="institution">Washington University School of Medicine</div>
+      <div class="address">660 S. Euclid Ave., Saint Louis, MO 63110, USA</div>
       <div class="header-links">
-        <a href="mailto:siqi_sun@fudan.edu.cn">✉ Email</a>
+        <a href="mailto:siqis@wustl.edu">✉ siqis@wustl.edu</a>
         <a href="cv.pdf" target="_blank">CV (PDF)</a>
         <a href="#" target="_blank">Google Scholar</a>
-        <a href="#" target="_blank">GitHub</a>
+        <a href="https://github.com/siqisunlab" target="_blank">GitHub</a>
       </div>
     </div>
   </div>
 </header>
 
+<!-- NAV -->
 <nav>
   <div class="nav-inner">
     <a href="#about">About</a>
@@ -302,60 +273,105 @@ footer {
     <a href="#publications">Publications</a>
     <a href="#experience">Experience</a>
     <a href="#education">Education</a>
+    <a href="#service">Service</a>
+    <a href="#awards">Awards</a>
     <a href="#contact">Contact</a>
   </div>
 </nav>
 
 <main>
 
+  <!-- ABOUT -->
   <section id="about">
     <h2>About</h2>
     <div class="bio-text">
-      <p>I am a Postdoctoral Associate at Fudan University, where I lead the Causal Learning Research Group. My research lies at the intersection of <strong>causal machine learning</strong>, <strong>medical image analysis</strong>, and <strong>clinical AI</strong>. I develop principled methods that move beyond correlation-based learning — building AI systems that reason causally and generalize reliably in real clinical settings.</p>
-      <p>My applied work focuses on AI-enabled diagnostics for retinal diseases and neonatal health, in close collaboration with clinicians and medical researchers. I am broadly interested in designing AI systems that are not only accurate, but interpretable and trustworthy for high-stakes medical decision-making.</p>
+      <p>I am a Postdoctoral Associate at Washington University School of Medicine. My research focuses on <strong>multimodal causal inference</strong>, <strong>causal learning</strong>, and <strong>AI-driven medical imaging</strong>. I develop principled methods for building trustworthy AI systems that reason causally and generalize reliably to real-world clinical settings.</p>
+      <p>My current work involves multimodal prediction of treatment outcomes in diabetic macular edema using real-world electronic health records and optical coherence tomography. I also apply causal inference with multimodal foundation models to study anti-VEGF injection effects. Previously, I led the Causal Learning Group at Fudan University's Shanghai Key Laboratory of Intelligent Information Processing, and ranked 9th (solo) in the 2024 MIDRC XAI Grand Challenge on pneumonia diagnosis from chest radiographs.</p>
     </div>
   </section>
 
+  <!-- RESEARCH INTERESTS -->
   <section id="research">
     <h2>Research Interests</h2>
     <div class="interests-list">
-      <span class="interest-tag">Causal Representation Learning</span>
-      <span class="interest-tag">Medical Image Analysis</span>
-      <span class="interest-tag">AI-Enabled Diagnostics</span>
+      <span class="interest-tag">Multimodal Causal Inference</span>
+      <span class="interest-tag">Causal Learning</span>
+      <span class="interest-tag">Artificial Intelligence</span>
       <span class="interest-tag">Computer Vision</span>
+      <span class="interest-tag">Medical Imaging</span>
+      <span class="interest-tag">Foundation Models</span>
       <span class="interest-tag">Interpretable Machine Learning</span>
-      <span class="interest-tag">Precision Medicine</span>
-      <span class="interest-tag">Counterfactual Inference</span>
-      <span class="interest-tag">Deep Learning</span>
+      <span class="interest-tag">Real-World Health Data</span>
     </div>
   </section>
 
+  <!-- PUBLICATIONS -->
   <section id="publications">
     <h2>Publications</h2>
     <div class="pub-list">
 
       <div class="pub-item">
-        <div class="pub-year">2024</div>
+        <div class="pub-num">[1]</div>
+        <div>
+          <div class="pub-title">Multimodal Prediction of Visual Improvement in Diabetic Macular Edema Using Real-World Electronic Health Records and Optical Coherence Tomography</div>
+          <div class="pub-authors"><strong>Sun S</strong>, Cai CX, Fan R, et al.</div>
+          <div class="pub-venue">Submitted to npj Digital Medicine</div>
+          <div class="pub-tags"><span class="pub-tag pt-sub">Under Review</span></div>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-num">[2]</div>
+        <div>
+          <div class="pub-title">One Size Fits All? Comparing Foundation and Task-specific Models for Retinal Fluid Segmentation</div>
+          <div class="pub-authors">Sun X, You S, <strong>Sun S</strong>, et al.</div>
+          <div class="pub-venue">Submitted to AMIA Annual Symposium 2026</div>
+          <div class="pub-tags"><span class="pub-tag pt-sub">Under Review</span></div>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-num">[3]</div>
+        <div>
+          <div class="pub-title">Multimodal Prediction of Visual Improvement in Diabetic Macular Edema Using Real-World EHR and OCT</div>
+          <div class="pub-authors"><strong>Sun S</strong></div>
+          <div class="pub-venue">Lightning Talk · WashU Medicine I2DB Symposium 2026, April 2026</div>
+          <div class="pub-tags"><span class="pub-tag pt-talk">Talk</span></div>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-num">[4]</div>
+        <div>
+          <div class="pub-title">Causal Inference with Multi-Modal Foundation Models: A Case Study of Anti-VEGF Injections in Diabetic Macular Edema</div>
+          <div class="pub-authors"><strong>Sun S</strong>, Cai CX, Fan R, et al.</div>
+          <div class="pub-venue">Spotlight Talk · OHDSI Global Symposium 2025, Aug 2025</div>
+          <div class="pub-tags"><span class="pub-tag pt-talk">Spotlight</span></div>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-num">[5]</div>
+        <div>
+          <div class="pub-title">Multimodal Foundation Models for Robust Treatment Effect Estimation in Real-World Data</div>
+          <div class="pub-authors"><strong>Sun S</strong>, Sotiras A, Zhang L</div>
+          <div class="pub-venue">Workshop Presentation · CVPR 2025 Multimodal Foundation Models for Biomedicine Workshop, Jun 2025</div>
+          <div class="pub-tags"><span class="pub-tag pt-talk">Workshop</span></div>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-num">[6]</div>
         <div>
           <div class="pub-title">Causal Representation Learning via Counterfactual Intervention</div>
           <div class="pub-authors">Li X*, <strong>Sun S*</strong>, Feng R &nbsp;&nbsp;(*equal contribution)</div>
-          <div class="pub-venue">Proceedings of the AAAI Conference on Artificial Intelligence, 38(4): 3234–3242</div>
+          <div class="pub-venue">Proceedings of the AAAI Conference on Artificial Intelligence, 2024, 38(4): 3234–3242</div>
           <div class="pub-tags"><span class="pub-tag pt-conf">AAAI 2024</span></div>
         </div>
       </div>
 
       <div class="pub-item">
-        <div class="pub-year">2023</div>
-        <div>
-          <div class="pub-title">Risk Factors and Machine Learning Prediction Models for Bronchopulmonary Dysplasia Severity in the Chinese Population</div>
-          <div class="pub-authors">He W, Zhang L, Feng R, Han F, Cao Y, <strong>Sun S</strong>, et al.</div>
-          <div class="pub-venue">World Journal of Pediatrics, 19(6): 568–576</div>
-          <div class="pub-tags"><span class="pub-tag pt-jour">Journal</span><span class="pub-tag pt-if">IF 9.186</span></div>
-        </div>
-      </div>
-
-      <div class="pub-item">
-        <div class="pub-year">2023</div>
+        <div class="pub-num">[7]</div>
         <div>
           <div class="pub-title">Diabetic Retinopathy Grading Based on Multiview Image Feature Fusion</div>
           <div class="pub-authors">Jiang L, <strong>Sun S*</strong>, Zou H, et al.</div>
@@ -365,51 +381,81 @@ footer {
       </div>
 
       <div class="pub-item">
-        <div class="pub-year">2022</div>
+        <div class="pub-num">[8]</div>
         <div>
           <div class="pub-title">An Interpretable Causal Approach for Bronchopulmonary Dysplasia Prediction</div>
           <div class="pub-authors"><strong>Sun S</strong>, Ji W, Tang L, et al.</div>
-          <div class="pub-venue">IEEE International Conference on Bioinformatics and Biomedicine (BIBM 2022) &nbsp;·&nbsp; Acceptance Rate: 19.8%</div>
+          <div class="pub-venue">IEEE International Conference on Bioinformatics and Biomedicine (BIBM 2022) · Acceptance Rate: 19.8%</div>
           <div class="pub-tags"><span class="pub-tag pt-conf">IEEE BIBM 2022</span></div>
         </div>
       </div>
 
       <div class="pub-item">
-        <div class="pub-year">2022</div>
+        <div class="pub-num">[9]</div>
         <div>
           <div class="pub-title">Retinal Vessel Segmentation Based on Multi-scale High-order Attention Mechanism</div>
           <div class="pub-authors">Jiang L, Li S, Cao J, <strong>Sun S</strong>, et al.</div>
-          <div class="pub-venue">Computer Systems and Applications, 31(10): 368–374</div>
+          <div class="pub-venue">Computer Systems and Applications, 2022, 31(10): 368–374</div>
           <div class="pub-tags"><span class="pub-tag pt-jour">Journal</span></div>
         </div>
       </div>
 
       <div class="pub-item">
-        <div class="pub-year">2021</div>
+        <div class="pub-num">[10]</div>
+        <div>
+          <div class="pub-title">Risk Factors and Machine Learning Prediction Models for Bronchopulmonary Dysplasia Severity in the Chinese Population</div>
+          <div class="pub-authors">He W, Zhang L, Feng R, Han F, Cao Y, <strong>Sun S</strong>, et al.</div>
+          <div class="pub-venue">World Journal of Pediatrics, 2023, 19(6): 568–576</div>
+          <div class="pub-tags"><span class="pub-tag pt-jour">Journal</span><span class="pub-tag pt-if">IF 9.186</span></div>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-num">[11]</div>
         <div>
           <div class="pub-title">CellDet: Dual-Task Cell Detection Network for IHC-Stained Image Analysis</div>
           <div class="pub-authors">Ji W, Tian W, Pan W, <strong>Sun S*</strong>, et al.</div>
-          <div class="pub-venue">IEEE International Conference on Bioinformatics and Biomedicine (BIBM 2021) &nbsp;·&nbsp; Acceptance Rate: 19.7%</div>
+          <div class="pub-venue">IEEE International Conference on Bioinformatics and Biomedicine (BIBM 2021) · Acceptance Rate: 19.7%</div>
           <div class="pub-tags"><span class="pub-tag pt-conf">IEEE BIBM 2021</span></div>
         </div>
       </div>
 
       <div class="pub-item">
-        <div class="pub-year">2020</div>
+        <div class="pub-num">[12]</div>
         <div>
-          <div class="pub-title">The Interactive Effect of Trade Openness and High Quality Economic Development: An Empirical Study Based on China and Countries Along the Maritime Silk Road</div>
+          <div class="pub-title">The Interactive Effect of Trade Openness and High-Quality Economic Development: An Empirical Study Based on China and Countries Along the Maritime Silk Road</div>
           <div class="pub-authors">Yu S, <strong>Sun S*</strong></div>
-          <div class="pub-venue">Journal of Henan Normal University (Philosophy and Social Sciences Edition), 47(01): 71–78</div>
+          <div class="pub-venue">Journal of Henan Normal University (Philosophy and Social Sciences Edition), 2020, 47(01): 71–78</div>
           <div class="pub-tags"><span class="pub-tag pt-jour">Journal</span></div>
         </div>
       </div>
 
       <div class="pub-item">
-        <div class="pub-year">2020</div>
+        <div class="pub-num">[13]</div>
         <div>
           <div class="pub-title">Marketization of Technology, Protection of Intellectual Property Rights and Producer Services</div>
           <div class="pub-authors">Yu S, <strong>Sun S*</strong></div>
-          <div class="pub-venue">East China Economic Management, 34(08): 55–63</div>
+          <div class="pub-venue">East China Economic Management, 2020, 34(08): 55–63</div>
+          <div class="pub-tags"><span class="pub-tag pt-jour">Journal</span></div>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-num">[14]</div>
+        <div>
+          <div class="pub-title">Shipping-Trade Correlation in the Belt and Road Practice: Based on DCC-MSV Model</div>
+          <div class="pub-authors"><strong>Sun S</strong>, Sun J, Yu S</div>
+          <div class="pub-venue">Navigation of China, 2020, 43(03): 118–122</div>
+          <div class="pub-tags"><span class="pub-tag pt-jour">Journal</span></div>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-num">[15]</div>
+        <div>
+          <div class="pub-title">Belt and Road Initiative in China: The Impact of Real Openness on Service Trade</div>
+          <div class="pub-authors">Yu S, <strong>Sun S*</strong></div>
+          <div class="pub-venue">American Journal of Industrial and Business Management, 2019, 9(6): 1431–1445</div>
           <div class="pub-tags"><span class="pub-tag pt-jour">Journal</span></div>
         </div>
       </div>
@@ -417,20 +463,57 @@ footer {
     </div>
   </section>
 
+  <!-- EXPERIENCE -->
   <section id="experience">
     <h2>Professional Experience</h2>
     <div class="cv-list">
+
       <div class="cv-item">
-        <div class="cv-dates">Dec. 2020 – Present</div>
+        <div class="cv-dates">2024 – Present</div>
         <div>
           <div class="cv-title">Postdoctoral Associate</div>
-          <div class="cv-org">Fudan University, Shanghai, China</div>
-          <div class="cv-desc">Leading the Causal Learning Research Group. Managing major Shanghai AI research project. Collaborating with clinical partners on AI-driven tools for ophthalmology and neonatology. Mentoring graduate students and serving on dissertation committees.</div>
+          <div class="cv-org">Washington University School of Medicine, St. Louis, MO, USA</div>
+          <div class="cv-desc">Multimodal causal modeling on real-world health data. Ranked 9th (solo) in the 2024 MIDRC XAI Grand Challenge on pneumonia diagnosis from chest radiographs.</div>
         </div>
       </div>
+
+      <div class="cv-item">
+        <div class="cv-dates">2021 – 2024</div>
+        <div>
+          <div class="cv-title">Postdoctoral Researcher</div>
+          <div class="cv-org">Fudan University, Shanghai, China</div>
+          <div class="cv-desc">Served as Principal Investigator and Project Manager. Led projects in causal learning and medical AI. Published in AAAI and IEEE BIBM. Mentored 4 graduate students.</div>
+        </div>
+      </div>
+
+      <div class="cv-item">
+        <div class="cv-dates">2021</div>
+        <div>
+          <div class="cv-title">Senior Advisor</div>
+          <div class="cv-org">Shanghai Artificial Intelligence Innovation Center, Shanghai, China</div>
+          <div class="cv-desc">Provided strategic consultation on AI development policies and international research initiatives.</div>
+        </div>
+      </div>
+
+      <div class="cv-item">
+        <div class="cv-dates">2016 – 2018</div>
+        <div>
+          <div class="cv-title">Lecturer (Part-time)</div>
+          <div class="cv-org">Shanghai Sipo Polytechnic, Shanghai, China</div>
+          <div class="cv-desc">
+            <ul>
+              <li>Fall 2018: English Course</li>
+              <li>Fall 2017: Labor Economics</li>
+              <li>Fall 2016: Theory and Practice of Network Finance</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
+  <!-- EDUCATION -->
   <section id="education">
     <h2>Education</h2>
     <div class="cv-list">
@@ -461,23 +544,65 @@ footer {
     </div>
   </section>
 
+  <!-- SERVICE -->
+  <section id="service">
+    <h2>Professional Service</h2>
+    <div class="service-grid">
+      <div class="service-block">
+        <h3>Peer Reviewer</h3>
+        <ul>
+          <li>Expert Systems With Applications</li>
+          <li>Heliyon</li>
+          <li>Journal of the American Medical Informatics Association (JAMIA)</li>
+          <li>Journal of Henan Normal University</li>
+        </ul>
+      </div>
+      <div class="service-block">
+        <h3>Other Service</h3>
+        <ul>
+          <li>Interviewer — College Graduate Admission &amp; Lab Interviews (2021–2024)</li>
+          <li>Graduation Thesis Reviewer — Shanghai Institute of Computing Technology (2021–2024)</li>
+          <li>Graduate Research Assistant — Fudan University (2021–2024)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- AWARDS -->
+  <section id="awards">
+    <h2>Awards &amp; Honors</h2>
+    <div class="awards-list">
+      <div class="award-item"><span class="award-name">National Graduate Scholarship of China</span><span class="award-year">2016</span></div>
+      <div class="award-item"><span class="award-name">Shanghai Outstanding Graduates</span><span class="award-year">2015</span></div>
+      <div class="award-item"><span class="award-name">Best Graduation Thesis Award</span><span class="award-year">2015</span></div>
+      <div class="award-item"><span class="award-name">Outstanding Graduates</span><span class="award-year">2015</span></div>
+      <div class="award-item"><span class="award-name">Excellent Student Cadre</span><span class="award-year">2014</span></div>
+      <div class="award-item"><span class="award-name">First Prize Scholarship</span><span class="award-year">2014</span></div>
+      <div class="award-item"><span class="award-name">Merit Student</span><span class="award-year">2014</span></div>
+      <div class="award-item"><span class="award-name">National Encouragement Scholarship</span><span class="award-year">2014</span></div>
+      <div class="award-item"><span class="award-name">Pacemaker to Outstanding Student</span><span class="award-year">2013</span></div>
+      <div class="award-item"><span class="award-name">First Prize Scholarship</span><span class="award-year">2013</span></div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
   <section id="contact">
     <h2>Contact</h2>
     <div class="contact-grid">
       <div class="contact-item">
         <div class="contact-label">Email</div>
-        <div class="contact-value"><a href="mailto:siqi_sun@fudan.edu.cn">siqi_sun@fudan.edu.cn</a></div>
+        <div class="contact-value"><a href="mailto:siqis@wustl.edu">siqis@wustl.edu</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-label">Phone</div>
+        <div class="contact-value">+1 618-660-4578</div>
       </div>
       <div class="contact-item">
         <div class="contact-label">Address</div>
-        <div class="contact-value">Songhu Road 2005, Shanghai 200438, China</div>
+        <div class="contact-value">660 S. Euclid Ave., Saint Louis, MO 63110, USA</div>
       </div>
       <div class="contact-item">
         <div class="contact-label">Google Scholar</div>
-        <div class="contact-value"><a href="#" target="_blank">Profile →</a></div>
-      </div>
-      <div class="contact-item">
-        <div class="contact-label">GitHub</div>
         <div class="contact-value"><a href="#" target="_blank">Profile →</a></div>
       </div>
     </div>
@@ -486,7 +611,7 @@ footer {
 </main>
 
 <footer>
-  Siqi Sun &nbsp;·&nbsp; Fudan University &nbsp;·&nbsp; Last updated March 2026
+  Siqi Sun &nbsp;·&nbsp; Washington University School of Medicine &nbsp;·&nbsp; Last updated March 2026
 </footer>
 
 </body>
