@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SCM & ATE — Interactive</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --border: rgba(255,255,255,0.08);
+    --text: #e8eaf0;
+    --muted: #7b7f9e;
+    --blue: #4f8ef7;
+    --orange: #f07a3a;
+    --green: #4ecb8d;
+    --purple: #a78bfa;
+    --yellow: #f7c948;
+    --node-t: #e8703a;
+    --node-y: #3db87a;
+    --node-x: #4272c4;
+  }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    min-height: 100vh;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  h1 {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-family: 'IBM Plex Mono', monospace;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.6rem;
+  }
+  .top-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+  }
+  .card-title {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    margin-bottom: 1rem;
+  }
+
+  /* Causal graph SVG */
+  #causal-graph {
+    width: 100%;
+    height: 220px;
+  }
+  .node-t { fill: var(--node-t); }
+  .node-y { fill: var(--node-y); }
+  .node-x { fill: var(--node-x); }
+  .node-label { fill: white; font-family: 'IBM Plex Sans', sans-serif; font-size: 14px; font-weight: 500; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+  .edge { stroke: rgba(255,255,255,0.25); stroke-width: 1.5; fill: none; marker-end: url(#arrow); }
+  .edge-coef { fill: var(--yellow); font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 500; text-anchor: middle; }
+
+  /* Coefficient inputs */
+  .coef-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+  .coef-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.82rem;
+  }
+  .coef-path {
+    color: var(--muted);
+    min-width: 110px;
+    font-size: 0.78rem;
+  }
+  .coef-input {
+    width: 64px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 4px 8px;
+    color: var(--yellow);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-align: center;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .coef-input:focus { border-color: var(--yellow); }
+  .coef-desc { color: var(--muted); font-size: 0.72rem; }
+
+  .divider { height: 1px; background: var(--border); margin: 0.4rem 0; }
+
+  /* ATE result box */
+  .ate-box {
+    background: rgba(247,201,72,0.07);
+    border: 1px solid rgba(247,201,72,0.25);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    margin-top: 0.75rem;
+  }
+  .ate-box-title { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-bottom: 0.4rem; }
+  .ate-breakdown { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; color: var(--muted); margin-bottom: 0.3rem; }
+  .ate-breakdown span { color: var(--yellow); }
+  .ate-total { font-family: 'IBM Plex Mono', monospace; font-size: 1.6rem; font-weight: 500; color: var(--yellow); }
+
+  /* Badges */
+  .legend { display: flex; gap: 0.75rem; margin-bottom: 0.75rem; flex-wrap: wrap; }
+  .leg { display: flex; align-items: center; gap: 5px; font-size: 0.72rem; color: var(--muted); font-family: 'IBM Plex Mono', monospace; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+
+  /* Chart section */
+  .chart-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+  }
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+  .ctrl-group { display: flex; align-items: center; gap: 0.5rem; flex: 1; min-width: 160px; }
+  .ctrl-group label { font-size: 0.72rem; color: var(--muted); font-family: 'IBM Plex Mono', monospace; white-space: nowrap; }
+  input[type=range] { flex: 1; accent-color: var(--blue); cursor: pointer; }
+  .ctrl-val { font-family: 'IBM Plex Mono', monospace; font-size: 0.82rem; font-weight: 500; color: var(--blue); min-width: 36px; text-align: right; }
+  .ate-display { display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: rgba(247,201,72,0.06); border: 1px solid rgba(247,201,72,0.2); border-radius: 8px; }
+  .ate-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--muted); }
+  .ate-value { font-family: 'IBM Plex Mono', monospace; font-size: 1.8rem; font-weight: 500; color: var(--yellow); }
+  .ate-formula { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--muted); }
+  .chart-wrap { position: relative; width: 100%; height: 220px; }
+</style>
+</head>
+<body>
+
+<h1>Synthetic SCM — Interactive ATE Ground Truth</h1>
+
+<div class="top-grid">
+
+  <!-- Causal graph -->
+  <div class="card">
+    <div class="card-title">Causal graph</div>
+    <div class="legend">
+      <div class="leg"><div class="dot" style="background:var(--node-t)"></div>Treatment (X3)</div>
+      <div class="leg"><div class="dot" style="background:var(--node-y)"></div>Outcome (X4)</div>
+      <div class="leg"><div class="dot" style="background:var(--node-x)"></div>Covariate</div>
+      <div class="leg"><div style="width:24px;height:3px;background:#f7c948;border-radius:2px"></div>direct path</div>
+      <div class="leg"><div style="width:24px;height:3px;background:#4ecb8d;border-radius:2px"></div>indirect path</div>
+    </div>
+    <svg id="causal-graph" viewBox="0 0 340 200">
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="rgba(255,255,255,0.3)"/>
+        </marker>
+        <marker id="arrow-direct" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#f7c948"/>
+        </marker>
+        <marker id="arrow-indirect" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#4ecb8d"/>
+        </marker>
+      </defs>
+
+      <!-- Edges -->
+      <line id="edge-x3x2" class="edge" x1="148" y1="62" x2="82" y2="138"/>
+      <line id="edge-x3x4" class="edge" x1="160" y1="68" x2="185" y2="132"/>
+      <line id="edge-x3x5" class="edge" x1="175" y1="60" x2="278" y2="132"/>
+      <line id="edge-x1x4" class="edge" x1="272" y1="62" x2="210" y2="132"/>
+      <line id="edge-x1x5" class="edge" x1="283" y1="68" x2="292" y2="132"/>
+      <line id="edge-x2x4" class="edge" x1="98" y1="150" x2="170" y2="155"/>
+
+      <!-- Coefficient labels on edges -->
+      <!-- X3->X2: 0.8 -->
+      <text class="edge-coef" id="lbl-x3x2" x="108" y="92">0.8</text>
+      <!-- X3->X4: 0.7 -->
+      <text class="edge-coef" id="lbl-x3x4" x="162" y="108">0.7</text>
+      <!-- X3->X5: 0.5 -->
+      <text class="edge-coef" id="lbl-x3x5" x="232" y="88">0.5</text>
+      <!-- X1->X4: 0.5 -->
+      <text class="edge-coef" id="lbl-x1x4" x="248" y="108">0.5</text>
+      <!-- X1->X5: 0.6 -->
+      <text class="edge-coef" id="lbl-x1x5" x="296" y="108">0.6</text>
+      <!-- X2->X4: 0.4 -->
+      <text class="edge-coef" id="lbl-x2x4" x="134" y="162">0.4</text>
+
+      <!-- Nodes -->
+      <!-- X3 (treatment) -->
+      <circle class="node-t" cx="162" cy="46" r="28"/>
+      <text class="node-label" x="162" y="46">X3</text>
+
+      <!-- X1 (covariate) -->
+      <circle class="node-x" cx="285" cy="46" r="28"/>
+      <text class="node-label" x="285" y="46">X1</text>
+
+      <!-- X2 (covariate) -->
+      <circle class="node-x" cx="68" cy="155" r="28"/>
+      <text class="node-label" x="68" y="155">X2</text>
+
+      <!-- X4 (outcome) -->
+      <circle class="node-y" cx="196" cy="160" r="28"/>
+      <text class="node-label" x="196" y="160">X4</text>
+
+      <!-- X5 (covariate) -->
+      <circle class="node-x" cx="296" cy="155" r="28"/>
+      <text class="node-label" x="296" y="155">X5</text>
+    </svg>
+  </div>
+
+  <!-- Coefficients + ATE result -->
+  <div class="card">
+    <div class="card-title">Edit coefficients → ATE updates</div>
+    <div class="coef-grid">
+
+      <div class="coef-row">
+        <span class="coef-path">X3 → X4</span>
+        <input class="coef-input" id="c-x3x4" type="number" value="0.7" step="0.1">
+        <span class="coef-desc">direct effect on Y</span>
+      </div>
+      <div class="coef-row">
+        <span class="coef-path">X3 → X2</span>
+        <input class="coef-input" id="c-x3x2" type="number" value="0.8" step="0.1">
+        <span class="coef-desc">X3 → X2</span>
+      </div>
+      <div class="coef-row">
+        <span class="coef-path">X2 → X4</span>
+        <input class="coef-input" id="c-x2x4" type="number" value="0.4" step="0.1">
+        <span class="coef-desc">X2 → Y (indirect)</span>
+      </div>
+      <div class="divider"></div>
+      <div class="coef-row">
+        <span class="coef-path">X3 → X5</span>
+        <input class="coef-input" id="c-x3x5" type="number" value="0.5" step="0.1">
+        <span class="coef-desc">not on ATE path</span>
+      </div>
+      <div class="coef-row">
+        <span class="coef-path">X1 → X4</span>
+        <input class="coef-input" id="c-x1x4" type="number" value="0.5" step="0.1">
+        <span class="coef-desc">confounder effect</span>
+      </div>
+      <div class="coef-row">
+        <span class="coef-path">X1 → X5</span>
+        <input class="coef-input" id="c-x1x5" type="number" value="0.6" step="0.1">
+        <span class="coef-desc">not on ATE path</span>
+      </div>
+    </div>
+
+    <div class="ate-box">
+      <div class="ate-box-title">GT ATE per unit ΔX3</div>
+      <div class="ate-breakdown">X3→X4 (direct): <span id="r-direct">0.700</span></div>
+      <div class="ate-breakdown">X3→X2→X4 (indirect): <span id="r-formula">0.8×0.4</span> = <span id="r-indirect">0.320</span></div>
+      <div class="ate-total" id="r-total">1.02</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Intervention range chart -->
+<div class="chart-section">
+  <div class="card-title">Intervention range → GT ATE</div>
+  <div class="controls">
+    <div class="ctrl-group">
+      <label>T from</label>
+      <input type="range" id="t0" min="-2" max="2" step="0.1" value="0">
+      <span class="ctrl-val" id="t0-out">0.0</span>
+    </div>
+    <div class="ctrl-group">
+      <label>T to</label>
+      <input type="range" id="t1" min="-2" max="2" step="0.1" value="1">
+      <span class="ctrl-val" id="t1-out">1.0</span>
+    </div>
+  </div>
+  <div class="ate-display">
+    <span class="ate-label">GT ATE =</span>
+    <span class="ate-value" id="ate-val">1.02</span>
+    <span class="ate-formula" id="ate-formula">= 1.02 × (1.0 − 0.0)</span>
+  </div>
+  <div class="chart-wrap">
+    <canvas id="ateChart"></canvas>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+  const inputs = {
+    x3x4: document.getElementById('c-x3x4'),
+    x3x2: document.getElementById('c-x3x2'),
+    x2x4: document.getElementById('c-x2x4'),
+    x3x5: document.getElementById('c-x3x5'),
+    x1x4: document.getElementById('c-x1x4'),
+    x1x5: document.getElementById('c-x1x5'),
+  };
+
+  const svgLabels = {
+    x3x4: document.getElementById('lbl-x3x4'),
+    x3x2: document.getElementById('lbl-x3x2'),
+    x2x4: document.getElementById('lbl-x2x4'),
+    x3x5: document.getElementById('lbl-x3x5'),
+    x1x4: document.getElementById('lbl-x1x4'),
+    x1x5: document.getElementById('lbl-x1x5'),
+  };
+
+  // Edge highlight
+  const edgeDirect   = document.getElementById('edge-x3x4');
+  const edgeIndirect1 = document.getElementById('edge-x3x2');
+  const edgeIndirect2 = document.getElementById('edge-x2x4');
+  const allEdges = ['edge-x3x2','edge-x3x4','edge-x3x5','edge-x1x4','edge-x1x5','edge-x2x4']
+    .map(id => document.getElementById(id));
+
+  function highlightEdges() {
+    allEdges.forEach(e => {
+      e.style.stroke = 'rgba(255,255,255,0.2)';
+      e.style.strokeWidth = '1.5';
+      e.setAttribute('marker-end', 'url(#arrow)');
+    });
+    edgeDirect.style.stroke = '#f7c948';
+    edgeDirect.style.strokeWidth = '3';
+    edgeDirect.setAttribute('marker-end', 'url(#arrow-direct)');
+    edgeIndirect1.style.stroke = '#4ecb8d';
+    edgeIndirect1.style.strokeWidth = '3';
+    edgeIndirect1.setAttribute('marker-end', 'url(#arrow-indirect)');
+    edgeIndirect2.style.stroke = '#4ecb8d';
+    edgeIndirect2.style.strokeWidth = '3';
+    edgeIndirect2.setAttribute('marker-end', 'url(#arrow-indirect)');
+  }
+  highlightEdges();
+
+  const t0El = document.getElementById('t0');
+  const t1El = document.getElementById('t1');
+  const t0Out = document.getElementById('t0-out');
+  const t1Out = document.getElementById('t1-out');
+  const ateValEl = document.getElementById('ate-val');
+  const ateFormula = document.getElementById('ate-formula');
+
+  function getCoefs() {
+    return {
+      x3x4: parseFloat(inputs.x3x4.value) || 0,
+      x3x2: parseFloat(inputs.x3x2.value) || 0,
+      x2x4: parseFloat(inputs.x2x4.value) || 0,
+    };
+  }
+
+  function getAtePerUnit() {
+    const c = getCoefs();
+    const direct = c.x3x4;
+    const indirect = c.x3x2 * c.x2x4;
+    return { direct, indirect, total: direct + indirect };
+  }
+
+  // Build chart data
+  function buildChartData(atePerUnit) {
+    const labels = [];
+    const data = [];
+    for (let d = -4; d <= 4; d += 0.25) {
+      labels.push(parseFloat(d.toFixed(2)));
+      data.push(parseFloat((atePerUnit * d).toFixed(4)));
+    }
+    return { labels, data };
+  }
+
+  const initAte = getAtePerUnit();
+  const initChart = buildChartData(initAte.total);
+
+  const chart = new Chart(document.getElementById('ateChart'), {
+    type: 'line',
+    data: {
+      labels: initChart.labels,
+      datasets: [
+        {
+          label: 'GT ATE',
+          data: initChart.data,
+          borderColor: '#4f8ef7',
+          backgroundColor: 'rgba(79,142,247,0.06)',
+          borderWidth: 2,
+          pointRadius: 0,
+          tension: 0,
+          fill: true
+        },
+        {
+          label: 'current',
+          data: [],
+          borderColor: '#f7c948',
+          backgroundColor: '#f7c948',
+          pointRadius: 8,
+          pointHoverRadius: 10,
+          showLine: false,
+          type: 'scatter'
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: { duration: 200 },
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => ' ATE = ' + ctx.parsed.y.toFixed(3) } }
+      },
+      scales: {
+        x: {
+          type: 'linear',
+          title: { display: true, text: 'ΔX3 (T_to − T_from)', color: '#7b7f9e', font: { size: 11, family: 'IBM Plex Mono' } },
+          ticks: { color: '#7b7f9e', font: { family: 'IBM Plex Mono', size: 10 }, maxTicksLimit: 10 },
+          grid: { color: 'rgba(255,255,255,0.05)' },
+          border: { color: 'rgba(255,255,255,0.1)' }
+        },
+        y: {
+          title: { display: true, text: 'GT ATE', color: '#7b7f9e', font: { size: 11, family: 'IBM Plex Mono' } },
+          ticks: { color: '#7b7f9e', font: { family: 'IBM Plex Mono', size: 10 } },
+          grid: { color: 'rgba(255,255,255,0.05)' },
+          border: { color: 'rgba(255,255,255,0.1)' }
+        }
+      }
+    }
+  });
+
+  function updateAll() {
+    const ate = getAtePerUnit();
+
+    // Update ATE box
+    document.getElementById('r-direct').textContent = ate.direct.toFixed(3);
+    document.getElementById('r-formula').textContent =
+      (parseFloat(inputs.x3x2.value)||0).toFixed(2) + '×' + (parseFloat(inputs.x2x4.value)||0).toFixed(2);
+    document.getElementById('r-indirect').textContent = ate.indirect.toFixed(3);
+    document.getElementById('r-total').textContent = ate.total.toFixed(3);
+
+    // Update SVG labels
+    Object.keys(svgLabels).forEach(k => {
+      svgLabels[k].textContent = (parseFloat(inputs[k].value) || 0).toFixed(2);
+    });
+
+    // Update chart line
+    const cd = buildChartData(ate.total);
+    chart.data.labels = cd.labels;
+    chart.data.datasets[0].data = cd.data;
+
+    // Update current point
+    const v0 = parseFloat(t0El.value);
+    const v1 = parseFloat(t1El.value);
+    const delta = parseFloat((v1 - v0).toFixed(2));
+    const ateVal = parseFloat((ate.total * delta).toFixed(3));
+    ateValEl.textContent = ateVal.toFixed(3);
+    ateFormula.textContent = '= ' + ate.total.toFixed(3) + ' × (' + v1.toFixed(1) + ' − ' + v0.toFixed(1) + ')';
+    t0Out.textContent = v0.toFixed(1);
+    t1Out.textContent = v1.toFixed(1);
+    chart.data.datasets[1].data = [{ x: delta, y: ateVal }];
+    chart.update();
+  }
+
+  Object.values(inputs).forEach(el => el.addEventListener('input', updateAll));
+  t0El.addEventListener('input', updateAll);
+  t1El.addEventListener('input', updateAll);
+  updateAll();
+</script>
+</body>
+</html>
